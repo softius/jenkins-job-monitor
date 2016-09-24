@@ -86,7 +86,7 @@ class PushCommand extends Command
     }
 
     /**
-     * @param ClientInterface $client
+     * @param GuzzleHttp\ClientInterface $client
      */
     public function setClient(ClientInterface $client)
     {
