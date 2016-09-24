@@ -56,6 +56,7 @@ class JobMonitorTest extends \PHPUnit_Framework_TestCase
         $monitor = new JobMonitor('test-request', 'test-displayName', 'test-description');
         $monitor->start();
         $monitor->stop(-1);
+        $monitor->setDuration(0);
 
         $request = $monitor->getRequest();
         $body = $request->getBody()->getContents();
