@@ -9,12 +9,29 @@
 
 Jenkins is useful for monitoring the non-interactive execution of processes, such as cron jobs, procmail, inetd-launched processes. This library facilates Jenkins integration for PHP projects and processes running in a PHP environment.
 
+[Monitoring external jobs in Jenkins][link-external-monitor-job]
+
 ## Install
 
 Via Composer
 
 ``` bash
 $ composer require softius/jenkins-job-monitor
+```
+
+## Usage
+
+### Submit a process result using CLI
+
+A process result can be submitted using the command `jenkins-job-monitor push`. This approach is only useful when the process output and total execution are already available and it's only necessary to push the data to Jenkins.
+
+``` bash
+./bin/jenkins-job-monitor push http://acme.org/jenkins jobName --log "Command results" --duration 5
+```
+Large log results can be transported through pipe as shown below.
+
+``` bash
+cat results.txt | ./bin/jenkins-job-monitor push http://acme.org/jenkins jobName --duration 5
 ```
 
 ## Testing
@@ -50,3 +67,4 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [link-downloads]: https://packagist.org/packages/softius/jenkins-job-monitor
 [link-author]: https://github.com/softius
 [link-contributors]: ../../contributors
+[link-external-monitor-job]: https://wiki.jenkins-ci.org/display/JENKINS/Monitoring+external+jobs
