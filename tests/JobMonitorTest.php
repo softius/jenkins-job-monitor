@@ -7,10 +7,14 @@ class JobMonitorTest extends \PHPUnit_Framework_TestCase
     public function testDuration()
     {
         $monitor = new JobMonitor('test-duration');
+
+        $monitor->setDuration(10);
+        $this->assertEquals(10, $monitor->getDuration());
+
         $monitor->start();
         sleep(1);
         $monitor->stop(0);
-        $this->assertGreaterThan(1000, $monitor->getDuration());
+        $this->assertGreaterThanOrEqual(1000, $monitor->getDuration());
         $this->assertLessThan(1100, $monitor->getDuration());
     }
 
@@ -35,6 +39,10 @@ class JobMonitorTest extends \PHPUnit_Framework_TestCase
     public function testExitCode()
     {
         $monitor = new JobMonitor('test-exit-code');
+
+        $monitor->setExitCode(10);
+        $this->assertEquals(10, $monitor->getExitCode());
+
         $monitor->start();
 
         $monitor->stop(1);
