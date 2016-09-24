@@ -35,10 +35,10 @@ class JobMonitor
     private $startedOn;
 
     /**
-     * When the job was completed, in milliseconds
-     * @var integer
+     * Returns total duration of job execution, in milliseconds
+     * @var int
      */
-    private $completedOn;
+    private $duration;
 
     /**
      * Integer indicating the error code. 0 is success and everything else is failure
@@ -64,7 +64,7 @@ class JobMonitor
         $this->displayName = $displayName;
         $this->description = $description;
 
-        $this->exitCode = $this->startedOn = $this->completedOn = null;
+        $this->exitCode = $this->startedOn = $this->duration = null;
         $this->clearLog();
     }
 
@@ -74,6 +74,7 @@ class JobMonitor
     public function start()
     {
         $this->startedOn = round(microtime(true) * 1000);
+        $this->duration = null;
     }
 
     /**
@@ -85,12 +86,20 @@ class JobMonitor
      */
     public function stop($exitCode, $log = null)
     {
-        $this->completedOn = round(microtime(true) * 1000);
-        $this->exitCode = $exitCode;
-
+        $completedOn = round(microtime(true) * 1000);
+        $this->setDuration(($completedOn - $this->startedOn));
+        $this->setExitCode($exitCode);
         if ($log) {
             $this->setLog($log);
         }
+    }
+
+    /**
+     * @param int $exitCode
+     */
+    public function setExitCode($exitCode)
+    {
+        $this->exitCode = $exitCode;
     }
 
     /**
@@ -108,7 +117,7 @@ class JobMonitor
      */
     public function isCompleted()
     {
-        return $this->completedOn !== null;
+        return $this->duration !== null;
     }
 
     /**
@@ -121,12 +130,20 @@ class JobMonitor
     }
 
     /**
+     * @param integer $duration Duration in milliseconds
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+    }
+
+    /**
      * Returns total duration of job execution, in milliseconds
      * @return integer
      */
     public function getDuration()
     {
-        return $this->completedOn - $this->startedOn;
+        return $this->duration;
     }
 
     /**
@@ -171,7 +188,7 @@ class JobMonitor
         $xmlTemplate = '<run><log encoding="hexBinary">%s</log><result>%d</result>%s</run>';
         $encodedLog = current(unpack('H*', $this->log));
         $xmlElements = null;
-        if ($this->completedOn !== null) {
+        if ($this->isCompleted()) {
             $xmlElements .= sprintf('<duration>%d</duration>', $this->getDuration());
         }
 
