@@ -21,17 +21,25 @@ $ composer require softius/jenkins-job-monitor
 
 ## Usage
 
-### Submit a process result using CLI
+### Monitor a process
+
+A process result can be submitted using the command `jenkins-job-monitor monitor` as indicated below.
+
+``` bash
+jenkins-job-monitor push http://acme.org/jenkins jobName 'ls -lah'
+```
+
+### Submit a process result
 
 A process result can be submitted using the command `jenkins-job-monitor push`. This approach is only useful when the process output and total execution are already available and it's only necessary to push the data to Jenkins.
 
 ``` bash
-./bin/jenkins-job-monitor push http://acme.org/jenkins jobName --log "Command results" --duration 5
+jenkins-job-monitor push http://acme.org/jenkins jobName --log "Command results" --duration 5
 ```
 Large log results can be transported through pipe as shown below.
 
 ``` bash
-cat results.txt | ./bin/jenkins-job-monitor push http://acme.org/jenkins jobName --duration 5
+cat results.txt | jenkins-job-monitor push http://acme.org/jenkins jobName --duration 5
 ```
 
 ## Testing
