@@ -23,7 +23,12 @@ class MonitorCommandTest extends \PHPUnit_Framework_TestCase
         $command->setClient($client);
         $command->setApplication(new Application());
         $commandTester = new CommandTester($command);
-        $exitCode = $commandTester->execute(['command' => 'monitor', 'url' => 'http://test.com', 'job' => 'test', 'monitor' => 'echo 1']);
+        $exitCode = $commandTester->execute([
+            'command' => 'monitor',
+            'url' => 'http://test.com',
+            'job' => 'test',
+            'monitor' => 'echo 1'
+            ]);
         $this->assertEquals(0, $exitCode);
     }
 }

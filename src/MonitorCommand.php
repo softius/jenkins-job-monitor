@@ -16,6 +16,10 @@ use Symfony\Component\Process\Process;
  */
 class MonitorCommand extends Command
 {
+    /**
+     * @var GuzzleHttp\ClientInterface
+     */
+    private $client;
 
     /**
      * Configures the monitor command.
@@ -72,7 +76,7 @@ class MonitorCommand extends Command
      *
      * @param InputInterface $input
      * @throws \RuntimeException
-     * @return mixed|string
+     * @return string
      */
     private function getMonitorArgument(InputInterface $input)
     {
