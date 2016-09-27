@@ -26,7 +26,7 @@ $ composer require softius/jenkins-job-monitor
 A process result can be submitted using the command `jenkins-job-monitor monitor` as indicated below.
 
 ``` bash
-jenkins-job-monitor push http://acme.org/jenkins jobName 'ls -lah'
+jenkins-job-monitor monitor http://acme.org/jenkins jobName 'ls -lah'
 ```
 
 ### Submit a process result
