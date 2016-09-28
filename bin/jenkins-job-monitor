@@ -8,6 +8,10 @@ use Symfony\Component\Console\Application;
 $pushCommand = new Softius\JenkinsJobMonitor\PushCommand();
 $pushCommand->setClient(new Client());
 
+$monitorCommand = new Softius\JenkinsJobMonitor\MonitorCommand();
+$monitorCommand->setClient(new Client());
+
 $application = new Application();
 $application->add($pushCommand);
+$application->add($monitorCommand);
 $application->run();
